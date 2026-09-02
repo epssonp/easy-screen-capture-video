@@ -2,11 +2,2966 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Screen Capture Video</title>
+
+    <title>Easy Screen Capture Video — Record Your Screen. Save the Video. Done.</title>
+
+    <meta
+        name="description"
+        content="A simple browser-based screen recorder. Record your screen, window, or browser tab. No account, no installation, and no cloud storage."
+    >
+
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Easy Screen Capture Video">
+    <meta property="og:description" content="Record your screen. Save the video. Done.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://easyscreencapturevideo.com/">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =========================================================
+           DESIGN SYSTEM
+           ========================================================= */
+
+        :root {
+            --color-background: #ffffff;
+            --color-surface: #f7f8fa;
+            --color-surface-strong: #f1f3f6;
+
+            --color-text: #111318;
+            --color-text-secondary: #626873;
+            --color-text-muted: #858b96;
+
+            --color-border: #e5e7eb;
+            --color-border-strong: #d9dce2;
+
+            --color-primary: #111318;
+            --color-primary-hover: #252932;
+
+            --color-accent: #2563eb;
+            --color-accent-hover: #1d4ed8;
+
+            --color-success: #16a34a;
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+
+            --shadow-sm:
+                0 1px 2px rgba(16, 24, 40, 0.04);
+
+            --shadow-md:
+                0 8px 30px rgba(16, 24, 40, 0.07);
+
+            --shadow-lg:
+                0 20px 60px rgba(16, 24, 40, 0.10);
+
+            --container: 1180px;
+
+            --section-space: 120px;
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+
+            color: var(--color-text);
+            background: var(--color-background);
+
+            line-height: 1.6;
+
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(
+                calc(100% - 48px),
+                var(--container)
+            );
+
+            margin-inline: auto;
+        }
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(255, 255, 255, 0.94);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .header-inner {
+            min-height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 32px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            letter-spacing: -0.02em;
+
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+
+            margin-right: 10px;
+
+            border-radius: 9px;
+
+            background: var(--color-text);
+
+            display: grid;
+            place-items: center;
+
+            color: white;
+        }
+
+        .brand-mark svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+
+            margin-left: auto;
+        }
+
+        .main-nav a {
+            color: var(--color-text-secondary);
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition:
+                color 160ms ease;
+        }
+
+        .main-nav a:hover {
+            color: var(--color-text);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        /* =========================================================
+           BUTTONS
+           ========================================================= */
+
+        .button {
+            min-height: 46px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 0 19px;
+
+            border-radius: 10px;
+
+            border: 1px solid transparent;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 160ms ease,
+                border-color 160ms ease,
+                transform 160ms ease,
+                box-shadow 160ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            color: white;
+            background: var(--color-primary);
+
+            box-shadow:
+                0 1px 2px rgba(16, 24, 40, 0.08);
+        }
+
+        .button-primary:hover {
+            background: var(--color-primary-hover);
+
+            box-shadow:
+                0 5px 15px rgba(16, 24, 40, 0.12);
+        }
+
+        .button-secondary {
+            color: var(--color-text);
+
+            background: white;
+
+            border-color: var(--color-border);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--color-border-strong);
+            background: var(--color-surface);
+        }
+
+        .button-large {
+            min-height: 54px;
+            padding: 0 25px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+        }
+
+        .button svg {
+            width: 17px;
+            height: 17px;
+        }
+
+
+        /* =========================================================
+           MOBILE NAV
+           ========================================================= */
+
+        .mobile-menu-button {
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+
+            background: white;
+
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+        }
+
+        .mobile-menu-button svg {
+            width: 19px;
+            height: 19px;
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            padding-top: 92px;
+            padding-bottom: 80px;
+
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 7px 11px;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: 999px;
+
+            background: var(--color-surface);
+
+            color: var(--color-text-secondary);
+
+            font-size: 11px;
+            font-weight: 600;
+
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--color-success);
+        }
+
+        .hero h1 {
+            max-width: 850px;
+
+            margin: 25px auto 22px;
+
+            font-size: clamp(
+                48px,
+                7vw,
+                78px
+            );
+
+            line-height: 1.02;
+
+            letter-spacing: -0.055em;
+
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            margin: 0 auto;
+
+            color: var(--color-text-secondary);
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            margin-top: 31px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .hero-note {
+            margin-top: 17px;
+
+            color: var(--color-text-muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           RECORDER MOCKUP
+           ========================================================= */
+
+        .recorder-wrapper {
+            max-width: 1020px;
+
+            margin: 72px auto 0;
+        }
+
+        .recorder-shell {
+            overflow: hidden;
+
+            border: 1px solid var(--color-border-strong);
+
+            border-radius: var(--radius-xl);
+
+            background: white;
+
+            box-shadow: var(--shadow-lg);
+
+            text-align: left;
+        }
+
+        .recorder-topbar {
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 20px;
+
+            border-bottom: 1px solid var(--color-border);
+
+            background: #fbfbfc;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 7px;
+        }
+
+        .window-control {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #d5d8de;
+        }
+
+        .recorder-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .recorder-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            color: var(--color-text-muted);
+
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #aeb3bc;
+        }
+
+        .recorder-content {
+            min-height: 450px;
+
+            padding: 65px 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .recorder-center {
+            width: 100%;
+            max-width: 590px;
+
+            text-align: center;
+        }
+
+        .recorder-icon {
+            width: 64px;
+            height: 64px;
+
+            margin: 0 auto 23px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: 17px;
+
+            background: var(--color-surface);
+
+            color: var(--color-text);
+        }
+
+        .recorder-icon svg {
+            width: 29px;
+            height: 29px;
+        }
+
+        .recorder-center h2 {
+            margin-bottom: 9px;
+
+            font-size: 25px;
+            line-height: 1.25;
+
+            letter-spacing: -0.025em;
+        }
+
+        .recorder-center p {
+            margin-bottom: 27px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 14px;
+        }
+
+        .recorder-main-button {
+            min-width: 210px;
+        }
+
+        .recorder-options {
+            margin-top: 27px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+        .recorder-option {
+            padding: 8px 12px;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: 8px;
+
+            color: var(--color-text-secondary);
+
+            background: white;
+
+            font-size: 12px;
+        }
+
+        .recorder-bottom {
+            padding: 17px 24px;
+
+            border-top: 1px solid var(--color-border);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--color-text-muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           TRUST STRIP
+           ========================================================= */
+
+        .trust-strip {
+            padding: 28px 0 32px;
+
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+
+            background: var(--color-surface);
+        }
+
+        .trust-items {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 28px 48px;
+        }
+
+        .trust-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .trust-item svg {
+            width: 16px;
+            height: 16px;
+
+            color: var(--color-text);
+        }
+
+
+        /* =========================================================
+           GENERAL SECTIONS
+           ========================================================= */
+
+        .section {
+            padding: var(--section-space) 0;
+        }
+
+        .section-alt {
+            background: var(--color-surface);
+        }
+
+        .section-heading {
+            max-width: 680px;
+
+            margin-bottom: 55px;
+        }
+
+        .section-heading.center {
+            margin-left: auto;
+            margin-right: auto;
+
+            text-align: center;
+        }
+
+        .section-kicker {
+            margin-bottom: 13px;
+
+            color: var(--color-accent);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(32px, 4vw, 48px);
+
+            line-height: 1.1;
+
+            letter-spacing: -0.045em;
+
+            margin-bottom: 17px;
+        }
+
+        .section-heading p {
+            color: var(--color-text-secondary);
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           BENEFITS
+           ========================================================= */
+
+        .benefits-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .benefit-card {
+            padding: 31px;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: var(--radius-lg);
+
+            background: white;
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        .benefit-icon {
+            width: 45px;
+            height: 45px;
+
+            margin-bottom: 23px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: var(--color-surface-strong);
+
+            color: var(--color-text);
+        }
+
+        .benefit-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 9px;
+
+            font-size: 19px;
+
+            letter-spacing: -0.02em;
+        }
+
+        .benefit-card p {
+            color: var(--color-text-secondary);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           RECORDING TYPES
+           ========================================================= */
+
+        .capture-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .capture-card {
+            min-height: 285px;
+
+            padding: 30px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: var(--radius-lg);
+
+            background: white;
+        }
+
+        .capture-number {
+            position: absolute;
+
+            top: 25px;
+            right: 27px;
+
+            color: var(--color-text-muted);
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .capture-visual {
+            width: 100%;
+            height: 105px;
+
+            margin-bottom: 27px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7f8fa,
+                    #ffffff
+                );
+        }
+
+        .capture-visual-inner {
+            width: 68%;
+            height: 60%;
+
+            border: 1px solid #cfd3da;
+
+            border-radius: 7px;
+
+            background: white;
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        .capture-visual-window {
+            width: 48%;
+            height: 67%;
+
+            border: 1px solid #cfd3da;
+
+            border-radius: 6px;
+
+            background: white;
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        .capture-visual-tab {
+            width: 72%;
+            height: 65%;
+
+            border: 1px solid #cfd3da;
+
+            border-radius: 6px;
+
+            background: white;
+
+            box-shadow: var(--shadow-sm);
+
+            position: relative;
+        }
+
+        .capture-visual-tab::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            top: 20px;
+
+            border-top: 1px solid var(--color-border);
+        }
+
+        .capture-card h3 {
+            margin-bottom: 7px;
+
+            font-size: 18px;
+
+            letter-spacing: -0.02em;
+        }
+
+        .capture-card p {
+            color: var(--color-text-secondary);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           HOW IT WORKS
+           ========================================================= */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .step {
+            min-height: 250px;
+
+            padding: 31px 28px;
+
+            border-right: 1px solid var(--color-border);
+        }
+
+        .step:last-child {
+            border-right: none;
+        }
+
+        .step-number {
+            margin-bottom: 70px;
+
+            color: var(--color-text-muted);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+        }
+
+        .step h3 {
+            margin-bottom: 9px;
+
+            font-size: 18px;
+
+            letter-spacing: -0.02em;
+        }
+
+        .step p {
+            color: var(--color-text-secondary);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           PRIVACY FEATURE
+           ========================================================= */
+
+        .privacy-layout {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 80px;
+
+            align-items: center;
+        }
+
+        .privacy-visual {
+            min-height: 430px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: var(--radius-xl);
+
+            background: white;
+
+            box-shadow: var(--shadow-md);
+        }
+
+        .privacy-shield {
+            width: 110px;
+            height: 130px;
+
+            color: var(--color-text);
+        }
+
+        .privacy-copy .section-heading {
+            margin-bottom: 30px;
+        }
+
+        .privacy-list {
+            display: grid;
+
+            gap: 14px;
+        }
+
+        .privacy-list-item {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .privacy-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            width: 20px;
+            height: 20px;
+
+            flex: 0 0 auto;
+
+            margin-top: 1px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: var(--color-text);
+
+            color: white;
+        }
+
+        .check svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .privacy-list-item strong {
+            display: block;
+
+            margin-bottom: 2px;
+
+            font-size: 14px;
+        }
+
+        .privacy-list-item span {
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           USE CASES
+           ========================================================= */
+
+        .use-case-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+        .use-case-card {
+            padding: 27px;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: var(--radius-md);
+
+            background: white;
+        }
+
+        .use-case-card h3 {
+            margin-bottom: 8px;
+
+            font-size: 16px;
+
+            letter-spacing: -0.015em;
+        }
+
+        .use-case-card p {
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+
+        /* =========================================================
+           RESOURCES
+           ========================================================= */
+
+        .resources-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .resource-card {
+            padding: 28px;
+
+            border: 1px solid var(--color-border);
+
+            border-radius: var(--radius-lg);
+
+            background: white;
+
+            transition:
+                border-color 160ms ease,
+                transform 160ms ease,
+                box-shadow 160ms ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-2px);
+
+            border-color: var(--color-border-strong);
+
+            box-shadow: var(--shadow-md);
+        }
+
+        .resource-label {
+            margin-bottom: 20px;
+
+            color: var(--color-accent);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .resource-card h3 {
+            margin-bottom: 9px;
+
+            font-size: 18px;
+
+            line-height: 1.35;
+
+            letter-spacing: -0.02em;
+        }
+
+        .resource-card p {
+            margin-bottom: 22px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            color: var(--color-text);
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .resource-link svg {
+            width: 15px;
+            height: 15px;
+        }
+
+
+        /* =========================================================
+           FINAL CTA
+           ========================================================= */
+
+        .final-cta {
+            padding: 115px 0;
+
+            text-align: center;
+
+            border-top: 1px solid var(--color-border);
+        }
+
+        .final-cta h2 {
+            max-width: 700px;
+
+            margin: 0 auto 17px;
+
+            font-size: clamp(36px, 5vw, 58px);
+
+            line-height: 1.05;
+
+            letter-spacing: -0.05em;
+        }
+
+        .final-cta p {
+            max-width: 560px;
+
+            margin: 0 auto;
+
+            color: var(--color-text-secondary);
+
+            font-size: 16px;
+        }
+
+        .final-cta .button {
+            margin-top: 28px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .site-footer {
+            padding-top: 65px;
+
+            border-top: 1px solid var(--color-border);
+
+            background: #fafbfc;
+        }
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.7fr 1fr 1fr 1fr 1fr;
+
+            gap: 35px;
+
+            padding-bottom: 55px;
+        }
+
+        .footer-brand p {
+            max-width: 270px;
+
+            margin-top: 16px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 16px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+
+            text-transform: uppercase;
+        }
+
+        .footer-column a {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: var(--color-text-secondary);
+
+            font-size: 13px;
+        }
+
+        .footer-column a:hover {
+            color: var(--color-text);
+        }
+
+        .footer-bottom {
+            min-height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            border-top: 1px solid var(--color-border);
+
+            color: var(--color-text-muted);
+
+            font-size: 12px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--color-text);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE — TABLET
+           ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .main-nav {
+                gap: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    1.5fr 1fr 1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: span 4;
+            }
+
+            .privacy-layout {
+                gap: 45px;
+            }
+        }
+
+
+        /* =========================================================
+           RESPONSIVE — MOBILE
+           ========================================================= */
+
+        @media (max-width: 820px) {
+
+            :root {
+                --section-space: 85px;
+            }
+
+            .container {
+                width: min(
+                    calc(100% - 34px),
+                    var(--container)
+                );
+            }
+
+            .header-inner {
+                min-height: 68px;
+            }
+
+            .main-nav,
+            .header-actions {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: 70px;
+                padding-bottom: 60px;
+            }
+
+            .hero h1 {
+                font-size: clamp(43px, 12vw, 62px);
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .recorder-wrapper {
+                margin-top: 50px;
+            }
+
+            .recorder-content {
+                min-height: 390px;
+                padding: 50px 20px;
+            }
+
+            .benefits-grid,
+            .capture-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .step:nth-child(2) {
+                border-right: none;
+            }
+
+            .step:nth-child(-n + 2) {
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .privacy-layout {
+                grid-template-columns: 1fr;
+
+                gap: 45px;
+            }
+
+            .privacy-visual {
+                min-height: 330px;
+                order: 2;
+            }
+
+            .privacy-copy {
+                order: 1;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: span 2;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                justify-content: center;
+
+                padding: 20px 0;
+
+                text-align: center;
+            }
+        }
+
+
+        /* =========================================================
+           RESPONSIVE — SMALL MOBILE
+           ========================================================= */
+
+        @media (max-width: 520px) {
+
+            .brand {
+                font-size: 12px;
+            }
+
+            .brand-mark {
+                width: 27px;
+                height: 27px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-actions .button {
+                width: 100%;
+            }
+
+            .recorder-topbar {
+                padding: 0 15px;
+            }
+
+            .recorder-status {
+                display: none;
+            }
+
+            .recorder-content {
+                min-height: 350px;
+            }
+
+            .recorder-center h2 {
+                font-size: 22px;
+            }
+
+            .recorder-options {
+                gap: 6px;
+            }
+
+            .recorder-option {
+                padding: 7px 9px;
+                font-size: 11px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .step,
+            .step:nth-child(2) {
+                min-height: auto;
+
+                padding: 27px 23px;
+
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .step:last-child {
+                border-bottom: none;
+            }
+
+            .step-number {
+                margin-bottom: 35px;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-brand {
+                grid-column: span 1;
+            }
+        }
+
+    </style>
 </head>
+
+
 <body>
-    <h1>Easy Screen Capture Video</h1>
-    <p>Record your screen easily and privately.</p>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+            <a href="/" class="brand" aria-label="Easy Screen Capture Video home">
+
+                <span class="brand-mark">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                        <path d="M8 8h8"></path>
+                        <path d="M8 12h5"></path>
+                    </svg>
+
+                </span>
+
+                EASY SCREEN CAPTURE VIDEO
+
+            </a>
+
+
+            <nav class="main-nav" aria-label="Main navigation">
+
+                <a href="#recorder">Screen Recorder</a>
+
+                <a href="#features">Features</a>
+
+                <a href="#how-it-works">How It Works</a>
+
+                <a href="#resources">Resources</a>
+
+                <a href="#about">About</a>
+
+                <a href="#privacy">Privacy</a>
+
+            </nav>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="#recorder"
+                    class="button button-primary"
+                >
+                    RECORD SCREEN
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M5 12h14"></path>
+                        <path d="m13 6 6 6-6 6"></path>
+                    </svg>
+
+                </a>
+
+            </div>
+
+
+            <button
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation menu"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h16"></path>
+                </svg>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="eyebrow">
+
+                    <span class="eyebrow-dot"></span>
+
+                    FREE • NO ACCOUNT • NO INSTALLATION
+
+                </div>
+
+
+                <h1>
+
+                    <span>Record your screen.</span>
+
+                    <span>Save the video. Done.</span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    A simple browser-based screen recorder for capturing
+                    your screen, window, or browser tab. No account,
+                    installation, or complicated workflow required.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="#recorder"
+                        class="button button-primary button-large"
+                    >
+
+                        RECORD SCREEN
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M5 12h14"></path>
+                            <path d="m13 6 6 6-6 6"></path>
+                        </svg>
+
+                    </a>
+
+                </div>
+
+
+                <p class="hero-note">
+
+                    Your recording is created directly in your browser.
+
+                </p>
+
+
+                <!-- =================================================
+                     RECORDER VISUAL PLACEHOLDER
+                     ================================================= -->
+
+                <div
+                    class="recorder-wrapper"
+                    id="recorder"
+                >
+
+                    <div class="recorder-shell">
+
+
+                        <div class="recorder-topbar">
+
+                            <div class="window-controls">
+
+                                <span class="window-control"></span>
+                                <span class="window-control"></span>
+                                <span class="window-control"></span>
+
+                            </div>
+
+
+                            <div class="recorder-title">
+
+                                Screen Recorder
+
+                            </div>
+
+
+                            <div class="recorder-status">
+
+                                <span class="status-dot"></span>
+
+                                Ready
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="recorder-content">
+
+                            <div class="recorder-center">
+
+
+                                <div class="recorder-icon">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect
+                                            x="3"
+                                            y="4"
+                                            width="18"
+                                            height="16"
+                                            rx="3"
+                                        ></rect>
+
+                                        <path d="M8 9h8"></path>
+                                        <path d="M8 13h5"></path>
+                                    </svg>
+
+                                </div>
+
+
+                                <h2>
+
+                                    Ready to record?
+
+                                </h2>
+
+
+                                <p>
+
+                                    Capture your screen, a window,
+                                    or a browser tab.
+
+                                </p>
+
+
+                                <button
+                                    type="button"
+                                    class="button button-primary button-large recorder-main-button"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="7"
+                                        ></circle>
+                                    </svg>
+
+                                    RECORD SCREEN
+
+                                </button>
+
+
+                                <div class="recorder-options">
+
+                                    <span class="recorder-option">
+                                        Entire Screen
+                                    </span>
+
+                                    <span class="recorder-option">
+                                        Window
+                                    </span>
+
+                                    <span class="recorder-option">
+                                        Browser Tab
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="recorder-bottom">
+
+                            No account required · No installation · No cloud storage
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             TRUST / PRODUCT PHILOSOPHY STRIP
+             ===================================================== -->
+
+        <section class="trust-strip">
+
+            <div class="container">
+
+                <div class="trust-items">
+
+
+                    <div class="trust-item">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 2v20"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+
+                        Simple
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M13 2 3 14h9l-1 8 10-12h-9z"></path>
+                        </svg>
+
+                        Fast
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+
+                        Private
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+
+                        Free
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FEATURES
+             ===================================================== -->
+
+        <section
+            class="section"
+            id="features"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading center">
+
+                    <div class="section-kicker">
+                        Why it's easy
+                    </div>
+
+                    <h2>
+                        Screen recording without the clutter.
+                    </h2>
+
+                    <p>
+                        Everything you need to capture a video of your
+                        screen. Nothing you don't.
+                    </p>
+
+                </div>
+
+
+                <div class="benefits-grid">
+
+
+                    <article class="benefit-card">
+
+                        <div class="benefit-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M12 5v14"></path>
+                                <path d="m5 12 7 7 7-7"></path>
+                            </svg>
+
+                        </div>
+
+                        <h3>
+                            Simple
+                        </h3>
+
+                        <p>
+                            Click Record Screen, choose what you want
+                            to capture, and start recording.
+                        </p>
+
+                    </article>
+
+
+                    <article class="benefit-card">
+
+                        <div class="benefit-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M13 2 3 14h9l-1 8 10-12h-9z"></path>
+                            </svg>
+
+                        </div>
+
+                        <h3>
+                            Fast
+                        </h3>
+
+                        <p>
+                            Start recording directly from your browser
+                            without installing desktop software.
+                        </p>
+
+                    </article>
+
+
+                    <article class="benefit-card">
+
+                        <div class="benefit-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <path d="m9 12 2 2 4-4"></path>
+                            </svg>
+
+                        </div>
+
+                        <h3>
+                            Private
+                        </h3>
+
+                        <p>
+                            Designed around browser-based recording
+                            rather than sending your recording to
+                            cloud storage.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WHAT CAN YOU RECORD?
+             ===================================================== -->
+
+        <section class="section section-alt">
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <div class="section-kicker">
+                        Capture what matters
+                    </div>
+
+                    <h2>
+                        Record your screen, your way.
+                    </h2>
+
+                    <p>
+                        Use the browser's native screen-selection interface
+                        to choose exactly what you want to capture.
+                    </p>
+
+                </div>
+
+
+                <div class="capture-grid">
+
+
+                    <article class="capture-card">
+
+                        <span class="capture-number">
+                            01
+                        </span>
+
+
+                        <div class="capture-visual">
+
+                            <div class="capture-visual-inner"></div>
+
+                        </div>
+
+
+                        <h3>
+                            Entire Screen
+                        </h3>
+
+                        <p>
+                            Capture everything visible on your display.
+                        </p>
+
+                    </article>
+
+
+                    <article class="capture-card">
+
+                        <span class="capture-number">
+                            02
+                        </span>
+
+
+                        <div class="capture-visual">
+
+                            <div class="capture-visual-window"></div>
+
+                        </div>
+
+
+                        <h3>
+                            Window
+                        </h3>
+
+                        <p>
+                            Record a specific application or window.
+                        </p>
+
+                    </article>
+
+
+                    <article class="capture-card">
+
+                        <span class="capture-number">
+                            03
+                        </span>
+
+
+                        <div class="capture-visual">
+
+                            <div class="capture-visual-tab"></div>
+
+                        </div>
+
+
+                        <h3>
+                            Browser Tab
+                        </h3>
+
+                        <p>
+                            Capture a browser tab without recording
+                            everything else on your screen.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             HOW IT WORKS
+             ===================================================== -->
+
+        <section
+            class="section"
+            id="how-it-works"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading center">
+
+                    <div class="section-kicker">
+                        How it works
+                    </div>
+
+                    <h2>
+                        Four simple steps.
+                    </h2>
+
+                    <p>
+                        No account. No installation. No complicated setup.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+
+                    <article class="step">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Click Record Screen
+                        </h3>
+
+                        <p>
+                            Start the recording process with one click.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Choose what to capture
+                        </h3>
+
+                        <p>
+                            Select your screen, window, or browser tab.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Record
+                        </h3>
+
+                        <p>
+                            Capture your video. Pause or stop when you're done.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step">
+
+                        <div class="step-number">
+                            04
+                        </div>
+
+                        <h3>
+                            Save the video
+                        </h3>
+
+                        <p>
+                            Preview your recording and download the video.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PRIVACY
+             ===================================================== -->
+
+        <section
+            class="section section-alt"
+            id="privacy"
+        >
+
+            <div class="container">
+
+
+                <div class="privacy-layout">
+
+
+                    <div class="privacy-visual">
+
+                        <svg
+                            class="privacy-shield"
+                            viewBox="0 0 100 120"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.4"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M50 6
+                                   L91 21
+                                   V55
+                                   C91 82 74 102 50 114
+                                   C26 102 9 82 9 55
+                                   V21
+                                   Z"
+                            ></path>
+
+                            <path d="m32 59 12 12 25-28"></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div class="privacy-copy">
+
+
+                        <div class="section-heading">
+
+                            <div class="section-kicker">
+                                Privacy by design
+                            </div>
+
+                            <h2>
+                                Your recording stays with you.
+                            </h2>
+
+                            <p>
+                                EASY SCREEN CAPTURE VIDEO is designed to
+                                keep screen recording simple and local,
+                                without unnecessary cloud infrastructure.
+                            </p>
+
+                        </div>
+
+
+                        <div class="privacy-list">
+
+
+                            <div class="privacy-list-item">
+
+                                <span class="check">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="m5 12 4 4L19 6"></path>
+                                    </svg>
+
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        No account
+                                    </strong>
+
+                                    <span>
+                                        Start recording without signing up.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="privacy-list-item">
+
+                                <span class="check">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="m5 12 4 4L19 6"></path>
+                                    </svg>
+
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        No installation
+                                    </strong>
+
+                                    <span>
+                                        Use the recorder directly in your browser.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="privacy-list-item">
+
+                                <span class="check">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="m5 12 4 4L19 6"></path>
+                                    </svg>
+
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        No cloud storage
+                                    </strong>
+
+                                    <span>
+                                        The product is designed without
+                                        storing your recordings online.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             USE CASES
+             ===================================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+
+                <div class="section-heading center">
+
+                    <div class="section-kicker">
+                        Useful for
+                    </div>
+
+                    <h2>
+                        One simple tool. Many uses.
+                    </h2>
+
+                    <p>
+                        Record whatever you need to explain, demonstrate,
+                        teach, or share.
+                    </p>
+
+                </div>
+
+
+                <div class="use-case-grid">
+
+
+                    <article class="use-case-card">
+
+                        <h3>
+                            Tutorials
+                        </h3>
+
+                        <p>
+                            Show someone exactly how to complete a task.
+                        </p>
+
+                    </article>
+
+
+                    <article class="use-case-card">
+
+                        <h3>
+                            Support
+                        </h3>
+
+                        <p>
+                            Record a problem instead of trying to describe it.
+                        </p>
+
+                    </article>
+
+
+                    <article class="use-case-card">
+
+                        <h3>
+                            Teaching
+                        </h3>
+
+                        <p>
+                            Capture lessons, demonstrations, and walkthroughs.
+                        </p>
+
+                    </article>
+
+
+                    <article class="use-case-card">
+
+                        <h3>
+                            Software Demos
+                        </h3>
+
+                        <p>
+                            Demonstrate an application or workflow on screen.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RESOURCES
+             ===================================================== -->
+
+        <section
+            class="section section-alt"
+            id="resources"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading center">
+
+                    <div class="section-kicker">
+                        Resources
+                    </div>
+
+                    <h2>
+                        Learn about screen recording.
+                    </h2>
+
+                    <p>
+                        Helpful guides and how-to articles for getting
+                        more from simple screen recording.
+                    </p>
+
+                </div>
+
+
+                <div class="resources-grid">
+
+
+                    <article class="resource-card">
+
+                        <div class="resource-label">
+                            How-To
+                        </div>
+
+                        <h3>
+                            How to Record Your Screen
+                        </h3>
+
+                        <p>
+                            A straightforward guide to recording your screen
+                            without installing complicated software.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="resource-link"
+                        >
+                            Read guide
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14"></path>
+                                <path d="m13 6 6 6-6 6"></path>
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+
+                    <article class="resource-card">
+
+                        <div class="resource-label">
+                            Guide
+                        </div>
+
+                        <h3>
+                            Screen Recording for Tutorials
+                        </h3>
+
+                        <p>
+                            Practical ideas for creating clear,
+                            useful screen-recorded tutorials.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="resource-link"
+                        >
+                            Read guide
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14"></path>
+                                <path d="m13 6 6 6-6 6"></path>
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+
+                    <article class="resource-card">
+
+                        <div class="resource-label">
+                            Tutorial
+                        </div>
+
+                        <h3>
+                            How to Record a Browser Tab
+                        </h3>
+
+                        <p>
+                            Learn how browser-based screen recording
+                            can capture a single tab.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="resource-link"
+                        >
+                            Read guide
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14"></path>
+                                <path d="m13 6 6 6-6 6"></path>
+                            </svg>
+
+                        </a>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ABOUT / PHILOSOPHY
+             ===================================================== -->
+
+        <section
+            class="section"
+            id="about"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading center">
+
+                    <div class="section-kicker">
+                        About
+                    </div>
+
+                    <h2>
+                        Screen recording shouldn't be complicated.
+                    </h2>
+
+                    <p>
+                        EASY SCREEN CAPTURE VIDEO is built around a simple
+                        idea: if all you need to do is record your screen,
+                        the process should be simple too.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FINAL CTA
+             ===================================================== -->
+
+        <section class="final-cta">
+
+            <div class="container">
+
+                <h2>
+                    Record your screen.
+                    Save the video. Done.
+                </h2>
+
+                <p>
+                    No account. No installation.
+                    Just a simple way to capture your screen.
+                </p>
+
+
+                <a
+                    href="#recorder"
+                    class="button button-primary button-large"
+                >
+
+                    RECORD SCREEN
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M5 12h14"></path>
+                        <path d="m13 6 6 6-6 6"></path>
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+
+            <div class="footer-grid">
+
+
+                <div class="footer-brand">
+
+                    <a
+                        href="/"
+                        class="brand"
+                    >
+
+                        <span class="brand-mark">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <rect
+                                    x="3"
+                                    y="4"
+                                    width="18"
+                                    height="16"
+                                    rx="3"
+                                ></rect>
+
+                                <path d="M8 8h8"></path>
+                                <path d="M8 12h5"></path>
+                            </svg>
+
+                        </span>
+
+                        EASY SCREEN CAPTURE VIDEO
+
+                    </a>
+
+
+                    <p>
+                        A simple browser-based screen recorder.
+                        Record your screen. Save the video. Done.
+                    </p>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Product
+                    </h3>
+
+                    <a href="#recorder">
+                        Screen Recorder
+                    </a>
+
+                    <a href="#features">
+                        Features
+                    </a>
+
+                    <a href="#how-it-works">
+                        How It Works
+                    </a>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Resources
+                    </h3>
+
+                    <a href="#resources">
+                        Guides
+                    </a>
+
+                    <a href="#resources">
+                        How-To
+                    </a>
+
+                    <a href="#resources">
+                        Tutorials
+                    </a>
+
+                    <a href="#resources">
+                        Use Cases
+                    </a>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Company
+                    </h3>
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#privacy">
+                        Privacy
+                    </a>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Support
+                    </h3>
+
+                    <a href="#">
+                        Help
+                    </a>
+
+                    <a href="#">
+                        Contact
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <div>
+                    © 2026 Easy Screen Capture Video
+                </div>
+
+
+                <div class="footer-bottom-links">
+
+                    <a href="#privacy">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                    <a href="#">
+                        Contact
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </footer>
+
+
 </body>
-</html>
+</html>>
