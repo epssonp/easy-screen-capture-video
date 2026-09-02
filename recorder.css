@@ -1,0 +1,132 @@
+﻿/* Easy Screen Capture Video — homepage recorder integration */
+
+.recorder-shell .status {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.recorder-shell .status .status-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #aeb3bc;
+}
+
+.recorder-shell .status.recording .status-dot {
+  background: #c62828;
+  box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1);
+}
+
+.recorder-shell .status.paused .status-dot {
+  background: #d97706;
+}
+
+.recorder-shell .status.ready .status-dot {
+  background: #16a34a;
+}
+
+.recorder-shell #recordingControls {
+  display: inline-flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.recorder-shell #recordingControls .button-stop {
+  background: #c62828;
+  color: #fff;
+}
+
+.recorder-shell #recordingControls .button-stop:hover:not(:disabled) {
+  background: #a61f1f;
+}
+
+.recorder-shell #recordingControls .button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.recorder-shell #previewSection {
+  width: 100%;
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-border);
+}
+
+.recorder-shell .preview-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.recorder-shell .preview-heading h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.recorder-shell #durationText {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.recorder-shell #previewVideo {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  background: #111318;
+}
+
+.recorder-shell .button-download {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.recorder-shell .text-button {
+  margin-top: 14px;
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.recorder-shell .text-button:hover {
+  color: var(--color-text);
+}
+
+.recorder-shell #recordingControls[hidden],
+.recorder-shell #previewSection[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .recorder-shell #recordingControls {
+    width: 100%;
+  }
+
+  .recorder-shell #recordingControls .button {
+    flex: 1;
+  }
+
+  .recorder-shell .preview-heading {
+    align-items: center;
+  }
+}
